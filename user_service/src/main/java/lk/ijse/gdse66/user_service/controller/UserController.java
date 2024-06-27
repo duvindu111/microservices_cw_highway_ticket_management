@@ -30,4 +30,9 @@ public class UserController {
     public boolean verifyCredentials(@Valid @RequestBody CredentialDTO credentialDTO){
         return userService.checkCredentials(credentialDTO);
     }
+
+    @GetMapping("/find_by_email/{email}")
+    public UserDTO verifyCredentials(@PathVariable("email") String email){
+        return userService.findUserByEmail(email);
+    }
 }

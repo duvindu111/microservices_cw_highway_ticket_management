@@ -56,5 +56,9 @@ public class UserServiceImpl implements UserService {
         return passwordEncoder.matches(credentialDTO.getPassword(), userEntity.getPassword());
     }
 
+    @Override
+    public UserDTO findUserByEmail(String email) {
+        return mapper.map(userRepo.findById(email) , UserDTO.class);
+    }
 
 }

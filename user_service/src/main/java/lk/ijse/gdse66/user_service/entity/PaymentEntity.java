@@ -8,8 +8,6 @@ import lombok.Setter;
 
 import java.sql.Date;
 import java.sql.Time;
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @Setter

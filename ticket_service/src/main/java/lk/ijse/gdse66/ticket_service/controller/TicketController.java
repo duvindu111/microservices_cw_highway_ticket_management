@@ -28,7 +28,7 @@ public class TicketController {
     }
 
     @GetMapping("/get/{ticket_id}")
-    public TicketDTO getVehicleDetails(@PathVariable("ticket_id") String ticket_id){
+    public TicketDTO getTicketDetails(@PathVariable("ticket_id") String ticket_id){
         return ticketService.getTicketDetails(ticket_id);
     }
 }

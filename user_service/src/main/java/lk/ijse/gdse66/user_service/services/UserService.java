@@ -10,4 +10,6 @@ public interface UserService {
     String updateUser(UserDTO userDTO);
 
     boolean checkCredentials(CredentialDTO credentialDTO);
+
+    UserDTO findUserByEmail(String email);
 }

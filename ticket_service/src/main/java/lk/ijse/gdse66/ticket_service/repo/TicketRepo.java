@@ -9,6 +9,8 @@ import org.springframework.data.jpa.repository.Query;
 public interface TicketRepo extends JpaRepository<TicketEntity,String> {
 
     @Modifying
-    @Query(value = "UPDATE ticket SET status=?2 WHERE ticket_id=?1",nativeQuery = true)
+    @Query(value = "UPDATE ticket SET status=?2 WHERE ticket_id=?1", nativeQuery = true)
     void updateTicketStatus(String ticketId, TicketStatus status);
+
+    TicketEntity findByTicketId(String ticketId);
 }

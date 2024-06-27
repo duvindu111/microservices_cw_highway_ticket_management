@@ -1,7 +1,7 @@
 package lk.ijse.gdse66.user_service.entity;
 
 import jakarta.persistence.*;
-import lk.ijse.gdse66.user_service.util.TicketStatus;
+import lk.ijse.gdse66.vehicle_service.util.TicketStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

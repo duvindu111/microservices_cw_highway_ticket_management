@@ -3,29 +3,26 @@ package lk.ijse.gdse66.vehicle_service.services.impl;
 import lk.ijse.gdse66.vehicle_service.dto.VehicleDTO;
 import lk.ijse.gdse66.vehicle_service.entity.UserEntity;
 import lk.ijse.gdse66.vehicle_service.entity.VehicleEntity;
-import lk.ijse.gdse66.vehicle_service.repo.UserRepo;
 import lk.ijse.gdse66.vehicle_service.repo.VehicleRepo;
 import lk.ijse.gdse66.vehicle_service.services.VehicleService;
 import lk.ijse.gdse66.vehicle_service.services.exceptions.DuplicateRecordException;
 import lk.ijse.gdse66.vehicle_service.services.exceptions.NotFoundException;
 import org.modelmapper.ModelMapper;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class VehicleServiceImpl implements VehicleService {
 
     private final VehicleRepo vehicleRepo;
-    private final UserRepo userRepo;
     private final ModelMapper mapper;
+    private final RestTemplate restTemplate;
 
-    public VehicleServiceImpl(VehicleRepo vehicleRepo, UserRepo userRepo, ModelMapper mapper) {
+    public VehicleServiceImpl(VehicleRepo vehicleRepo, ModelMapper mapper, RestTemplate restTemplate) {
         this.vehicleRepo = vehicleRepo;
-        this.userRepo = userRepo;
+        this.restTemplate = restTemplate;
         this.mapper = mapper;
     }
 
@@ -35,7 +32,7 @@ public class VehicleServiceImpl implements VehicleService {
             throw new DuplicateRecordException("Vehicle already exists - Registration number: " + vehicleDTO.getLicensePlateNum());
         }else{
             VehicleEntity vehicleEntity = mapper.map(vehicleDTO, VehicleEntity.class);
-            UserEntity userEntity = userRepo.findByEmail(vehicleDTO.getUserEmail());
+            UserEntity userEntity = restTemplate.getForObject("http://USER-SERVICE/api/v1/user/find_by_email/" + vehicleDTO.getUserEmail(), UserEntity.class);
             if (userEntity == null) {
                 throw new NotFoundException("User not found with email: " + vehicleDTO.getUserEmail());
             }
@@ -49,7 +46,7 @@ public class VehicleServiceImpl implements VehicleService {
     public String updateVehicle(VehicleDTO vehicleDTO) {
         if(vehicleRepo.existsByLicensePlateNum(vehicleDTO.getLicensePlateNum())){
             VehicleEntity vehicleEntity = mapper.map(vehicleDTO, VehicleEntity.class);
-            UserEntity userEntity = userRepo.findByEmail(vehicleDTO.getUserEmail());
+            UserEntity userEntity = restTemplate.getForObject("http://USER-SERVICE/api/v1/user/find_by_email/" + vehicleDTO.getUserEmail(), UserEntity.class);
             if (userEntity == null) {
                 throw new NotFoundException("User not found with email: " + vehicleDTO.getUserEmail());
             }

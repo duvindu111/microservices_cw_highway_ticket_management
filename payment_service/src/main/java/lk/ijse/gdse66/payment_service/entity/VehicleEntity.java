@@ -19,7 +19,7 @@ public class VehicleEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "vehicle_id")
     private int vehicleId;
-    @Column(name = "license_plate_num", nullable = false)
+    @Column(name = "license_plate_num", nullable = false, unique = true)
     private String licensePlateNum;
     @Column(name = "vehicle_type", nullable = false)
     private String vehicleType;

@@ -43,8 +43,8 @@ public class TicketServiceImpl implements TicketService {
 
     @Override
     public TicketDTO getTicketDetails(String ticketId) {
-        Optional<TicketEntity> ticketEntity = ticketRepo.findById(ticketId);
-        if (ticketEntity.isPresent()) {
+        TicketEntity ticketEntity = ticketRepo.findByTicketId(ticketId);
+        if (ticketEntity != null) {
             return mapper.map(ticketEntity, TicketDTO.class);
         } else {
             throw new NotFoundException("No such ticket | Ticket ID: " + ticketId);

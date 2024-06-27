@@ -1,19 +1,16 @@
 package lk.ijse.gdse66.user_service.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 @Entity
 @Table(name = "vehicle")
 public class VehicleEntity {
@@ -22,9 +19,9 @@ public class VehicleEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "vehicle_id")
     private int vehicleId;
-    @Column(nullable = false)
+    @Column(name = "license_plate_num", nullable = false, unique = true)
     private String licensePlateNum;
-    @Column(nullable = false)
+    @Column(name = "vehicle_type", nullable = false)
     private String vehicleType;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_email", referencedColumnName = "email")
